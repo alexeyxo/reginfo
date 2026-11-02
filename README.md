@@ -1,5 +1,7 @@
 # reginfo
 
+[![CI (tests and lint)](https://github.com/alexeyxo/reginfo/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/alexeyxo/reginfo/actions/workflows/ci.yml?query=branch%3Amain)
+
 A Go library for domain and IP registration lookups. Pass a domain name, IPv4 address, or IPv6 address and receive structured registration data. The client discovers registry servers through IANA, queries RDAP, and falls back to WHOIS when needed.
 
 - Domain names in Unicode or punycode, with ICANN public suffix validation.
@@ -130,4 +132,4 @@ make check
 
 Individual commands are available as `make lint`, `make test` (or `make tests`), `make build`, and `make fmt`. Run `make help` for the command list. HTTP requests use the pinned [Resty v3](https://pkg.go.dev/resty.dev/v3@v3.0.0-rc.4) dependency.
 
-[GitHub Actions CI](.github/workflows/ci.yml) runs `make test` and `make lint` as separate jobs on every push and pull request, and supports manual runs. It uses the Go version from `go.mod` and the golangci-lint version pinned in `Makefile`.
+[GitHub Actions CI](.github/workflows/ci.yml) runs `make test` and `make lint` as separate jobs on pushes to `main` and on pull requests, and supports manual runs. It uses the Go version from `go.mod` and the golangci-lint version pinned in `Makefile`.
