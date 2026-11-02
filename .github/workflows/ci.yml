@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Run tests with race detection and coverage
+        run: make test
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Install golangci-lint
+        run: make install-linter
+
+      - name: Run linter
+        run: make lint
